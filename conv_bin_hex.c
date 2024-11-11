@@ -2,20 +2,18 @@
 #include <string.h>
 #include <stdlib.h>
 
-/*char* reverse(char s[]){
+void reverse(char s[]){
+    char temp;
     int size;
     int i, j;
 
     for(size = 1; s[size - 1] != '\0'; size++);
 
-    if(size == 0) return '\0';
-
-    char reversed[size];
-
     for(i = 0, j = size; i <= size; i++, j--){
-        reversed[i] =  s[j - 1];
+        temp = s[i];
+        s[i] =  s[j - 1];
+        s[j - 1] = temp;
     }
-    return reversed;
 }
 
 int htoi(char s[]){
@@ -26,7 +24,7 @@ int htoi(char s[]){
     for(i = 0; s[i] != '\0'; i++){
         for(j = 0; j < 16; j++){
             if(s[i] == hex[j]){
-                sum = sum * 16 + i;
+                sum = sum * 16 + j;
                 break;
             }
         }
@@ -34,35 +32,38 @@ int htoi(char s[]){
     return sum;
 }
 
-int itoh(int n){
+char* itoh(int n){
     int i, j;
     int temp;
-    char hex[32];
+    char *hex = malloc(32 * sizeof(char));
     char hexC[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
-    for(i = 0; n == 0; i++){
-        for(j = 0; j < 16; j++){
-            temp = n % 16;
-            n /= 16;
-            hex[i] = hexC[temp];
-            break;
-        }
-    }
-    return reverse(hex);
+    if(!hex) return NULL;
+
+    do {
+        temp = n % 16;
+        hex[i++] = hexC[temp];
+        n /= 16;
+    } while (n > 0);
+    reverse(hex);
+
+    return hex;
 }
 
 char* itob(int n){
-    char bin[64];
+    char *bin = malloc(64 * sizeof(char));
     int temp;
     int i, j;
 
-    for(i = 0; n; i++){
-        temp = n % 2;
-        bin[i] = putchar(temp);
-        n /= 2;
-    }
+    if(!bin) return NULL;
 
-    return reverse(bin);
+    do {
+        bin[i++] = (n % 2) + '0';
+        n /= 2;
+    } while (n > 0);
+    reverse(bin);
+
+    return bin;
 }
 
 
@@ -82,6 +83,7 @@ int btoi(char bin[]){
 int main(){
     char s[32];
     char cnumber[32];
+    char *result;
     int inumber;
     int option;
 
@@ -90,8 +92,8 @@ int main(){
     printf("\t2. From hexadecimal to decimal\n");
     printf("\t3. From decimal to binary\n");
     printf("\t4. From binary to decimal\n");
-    printf("\t1. From binary to hexadecimal\n");
-    printf("\t1. From hexadecimal to binary\n");
+    printf("\t5. From binary to hexadecimal\n");
+    printf("\t6. From hexadecimal to binary\n");
 
     while((fgets(s, 32, stdin)) != NULL){
         sscanf(s, "%d %31s", &option, &cnumber);
@@ -99,21 +101,27 @@ int main(){
         switch(option){
             case 1:
                 inumber = atoi(cnumber);
-                printf("%s", itoh(inumber));
+                result = itoh(inumber);
+                printf("%s", result);
+                free(result);
                 break;
             case 2:
                 printf("%d", htoi(cnumber));
                 break;
             case 3:
                 inumber = atoi(cnumber);
-                printf("%s", itob(inumber));
+                result = itob(inumber);
+                printf("%s", result);
+                free(result);
                 break;
             case 4:
                 printf("%d", btoi(cnumber));
                 break;
             case 5:
                 inumber = btoi(cnumber);
-                printf("%d", itoh(cnumber));
+                result = itoh(inumber);
+                printf("%d", result);
+                free(result);
                 break;
             case 6:
                 inumber = htoi(cnumber);
@@ -124,5 +132,7 @@ int main(){
                 break;
         }
     }
+
+    
     return 0;
-}*/
+}
