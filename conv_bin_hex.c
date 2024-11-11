@@ -47,6 +47,8 @@ char* itoh(int n){
     } while (n > 0);
     reverse(hex);
 
+    hex[i] = '\0';
+
     return hex;
 }
 
@@ -62,6 +64,8 @@ char* itob(int n){
         n /= 2;
     } while (n > 0);
     reverse(bin);
+
+    bin[i] = '\0';
 
     return bin;
 }
@@ -83,7 +87,7 @@ int btoi(char bin[]){
 int main(){
     char s[32];
     char cnumber[32];
-    char *result;
+    char *result = malloc(64*sizeof(char));
     int inumber;
     int option;
 
@@ -102,30 +106,30 @@ int main(){
             case 1:
                 inumber = atoi(cnumber);
                 result = itoh(inumber);
-                printf("%s", result);
+                printf("%s\n", result);
                 free(result);
                 break;
             case 2:
-                printf("%d", htoi(cnumber));
+                printf("%d\n", htoi(cnumber));
                 break;
             case 3:
                 inumber = atoi(cnumber);
                 result = itob(inumber);
-                printf("%s", result);
+                printf("%s\n", result);
                 free(result);
                 break;
             case 4:
-                printf("%d", btoi(cnumber));
+                printf("%d\n", btoi(cnumber));
                 break;
             case 5:
                 inumber = btoi(cnumber);
                 result = itoh(inumber);
-                printf("%d", result);
+                printf("%s\n", result);
                 free(result);
                 break;
             case 6:
                 inumber = htoi(cnumber);
-                printf("%d", itob(inumber));
+                printf("%d\n", itob(inumber));
                 break;
             default:
                 printf("Not a valid option. \n");
