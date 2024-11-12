@@ -43,7 +43,7 @@ int main(){
 
     for(i = 0; i < n; i++){
         for(j = 0; j < m; j++){
-            printf("(%d, %d)", i, j);
+            printf("(%d, %d): ", i, j);
             scanf("%d", &mat1[i][j]);
         }
     }
@@ -52,7 +52,7 @@ int main(){
 
     for(i = 0; i < n; i++){
         for(j = 0; j < m; j++){
-            printf("(%d, %d)", i, j);
+            printf("(%d, %d): ", i, j);
             scanf("%d", &mat2[i][j]);
         }
     }
